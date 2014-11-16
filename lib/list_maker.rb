@@ -22,4 +22,19 @@ class ListMaker
     organized_list_of_attendees.select { |attendee| attendee.email == email }.sort_by { |attendee| attendee.last_name }
   end
 
+  def process_street(street)
+    organized_list_of_attendees.select { |attendee| attendee.street == street }.sort_by { |attendee| attendee.last_name }
+  end
+
+  def process_state(state)
+    organized_list_of_attendees.select { |attendee| attendee.state == state }.sort_by { |attendee| attendee.last_name }
+  end
+
+  def process_city(city)
+    organized_list_of_attendees.select { |attendee| attendee.city == city }.sort_by { |attendee| attendee.last_name }
+  end
+
+  def process_zipcode(zipcode)
+    organized_list_of_attendees.select { |attendee| attendee.zipcode == zipcode }.sort_by { |attendee| attendee.last_name }
+  end
 end
