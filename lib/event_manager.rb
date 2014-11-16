@@ -1,10 +1,10 @@
-require_relative 'reporters'  # => true
+require_relative 'attendees'  # => true
 
 class EventManager
-  attr_reader :reporters  # => nil
+  attr_reader :list_of_attendees  # => nil
 
   def initialize(entries)
-    @reporters = entries.map { |data| Reporters.new(data) }
+    @list_of_attendees = entries.map { |attendee| Attendees.new(attendee) }
   end
 
   def look_up(name)
@@ -12,8 +12,8 @@ class EventManager
   end
 
   def look_up_by_last_name(name)
-    new_list = reporters.select { |reporter| reporter.last_name == name}
-    new_list.sort_by { |entry| entry.first_name }
+    new_list = list_of_attendees.select { |attendee| attendee.last_name == name}
+    new_list.sort_by { |attendee| attendee.first_name }
   end
 
 
