@@ -23,7 +23,6 @@ class CLI
     until quit?
       @command = input.gets.chomp.downcase
       process_commands(command)
-
     end
   end
 
