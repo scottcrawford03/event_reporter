@@ -2,10 +2,10 @@ gem 'minitest', '~> 5.2'
 require 'minitest/autorun'
 require 'minitest/pride'
 require_relative '../lib/event_manager'
+require_relative '../event_attendees_small'
 
 class IntegrationTest < Minitest::Test
   def test_it_lookup_by_last_name
-    list_of_attendees = []
     event_manager = EventManager.new(list_of_attendees)
     entries = event_manager.find('Parker')
 
