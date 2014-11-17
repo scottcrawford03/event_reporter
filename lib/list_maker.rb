@@ -1,4 +1,5 @@
 require_relative 'attendees'
+
 class ListMaker
   attr_reader :list_of_attendees, :organized_list_of_attendees
 
