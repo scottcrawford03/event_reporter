@@ -14,7 +14,7 @@ class CLI
     @output    = output
     @command   = ''
     @messages  = Messages.new
-    @processor = Processor.new
+    @processor = Processor.new(input, output)
 
   end
 
