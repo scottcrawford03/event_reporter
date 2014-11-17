@@ -22,5 +22,4 @@ class Queue
   def clear
     @queue = []
   end
-
 end
