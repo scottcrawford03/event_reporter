@@ -1,7 +1,5 @@
-gem 'minitest', '~> 5.2'
-require 'minitest/autorun'
-require 'minitest/pride'
-require_relative '../lib/messages'
+require_relative '../test_helper'
+require_relative '../lib/printer'
 
 class IntegrationTest < Minitest::Test
   def test_it_lookup_by_last_name
@@ -12,18 +10,18 @@ class IntegrationTest < Minitest::Test
     ]
 
     list_maker = ListMaker.new(entries)
-    entries = list_maker.process_attribute('last_name','Parker')
+    entries = list_maker.process_attribute('last_name','parker')
 
     assert_equal 3, entries.size
     e1, e2, e3 = entries
 
-    assert_equal "Gregory Parker", e1.name
-    assert_equal "718-305-4000", e1.home_phone
+    assert_equal "gregory parker", e1.name
+    assert_equal "7183054000", e1.home_phone
 
-    assert_equal "Patrick Parker", e2.name
-    assert_equal "718-305-4000", e2.home_phone
+    assert_equal "patrick parker", e2.name
+    assert_equal "7183054000", e2.home_phone
 
-    assert_equal "Scott Parker", e3.name
-    assert_equal "202-270-1000", e3.home_phone
+    assert_equal "scott parker", e3.name
+    assert_equal "2022701000", e3.home_phone
   end
 end

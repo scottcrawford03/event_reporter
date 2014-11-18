@@ -19,7 +19,7 @@ class CLI
   def search
     output.puts printer.intro_message
     until quit?
-      @command = input.gets.chomp
+      @command = input.gets.chomp.downcase
       process_commands(command)
     end
   end

@@ -22,12 +22,11 @@ class Printer
 
   def queue_printer(current_queue)
     # max_length = current_queue.max_by { |attendee| attendee.last_name.length }
-    print_header
+    puts print_header
     current_queue.each do |attendee|
       attendee.instance_variables.each { |ivar| print "#{attendee.instance_variable_get(ivar)}\t" }
       puts "\n"
     end
-
   end
 
 end

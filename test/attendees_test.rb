@@ -1,6 +1,4 @@
-gem 'minitest', '~> 5.2'
-require 'minitest/autorun'
-require 'minitest/pride'
+require_relative '../test_helper'
 require_relative '../lib/attendee'
 
 class AttendeeTest < Minitest::Test
@@ -18,15 +16,15 @@ class AttendeeTest < Minitest::Test
     }
     entry = Attendee.new(data)
 
-    assert_equal '1/31/09', entry.date
-    assert_equal 'Gregory', entry.first_name
-    assert_equal 'Parker', entry.last_name
-    assert_equal 'Gregory Parker', entry.name
-    assert_equal '718-305-4000', entry.home_phone
+    #assert_equal '1/31/09', entry.date
+    assert_equal 'gregory', entry.first_name
+    assert_equal 'parker', entry.last_name
+    assert_equal 'gregory parker', entry.name
+    assert_equal '7183054000', entry.home_phone
     assert_equal 'jhopenh1@jumpstartlab.com', entry.email
-    assert_equal '7123 Penn Avenue, #3', entry.street
-    assert_equal 'Pittsburgh', entry.city
-    assert_equal 'PA', entry.state
+    assert_equal '7123 penn avenue, #3', entry.street
+    assert_equal 'pittsburgh', entry.city
+    assert_equal 'pa', entry.state
     assert_equal '15208', entry.zipcode
 
   end

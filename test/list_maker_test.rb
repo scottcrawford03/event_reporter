@@ -1,6 +1,4 @@
-gem 'minitest', '~> 5.2'
-require 'minitest/autorun'
-require 'minitest/pride'
+require_relative '../test_helper'
 require_relative '../lib/list_maker'
 require 'pry'
 
@@ -13,14 +11,14 @@ class ListMakerTest < Minitest::Test
     ]
 
     list_maker = ListMaker.new(entries)
-    result = list_maker.process_attribute('last_name', 'Parker')
+    result = list_maker.process_attribute('last_name', 'parker')
 
     assert_equal 3, result.count
 
     greg, pat = result
 
-    assert_equal "Gregory", greg.first_name
-    assert_equal "Patrick", pat.first_name
+    assert_equal "gregory", greg.first_name
+    assert_equal "patrick", pat.first_name
   end
 
   def test_it_can_look_up_by_phone_number
@@ -31,14 +29,14 @@ class ListMakerTest < Minitest::Test
     ]
 
     list_maker = ListMaker.new(entries)
-    result = list_maker.process_attribute('home_phone','718-305-4000')
+    result = list_maker.process_attribute('home_phone','7183054000')
 
     assert_equal 2, result.count
 
     greg, pat = result
 
-    assert_equal "Gregory", greg.first_name
-    assert_equal "Patrick", pat.first_name
+    assert_equal "gregory", greg.first_name
+    assert_equal "patrick", pat.first_name
   end
 
   def test_it_can_look_up_by_first_name
@@ -49,13 +47,13 @@ class ListMakerTest < Minitest::Test
     ]
 
     list_maker = ListMaker.new(entries)
-    result = list_maker.process_attribute('first_name','Patrick')
+    result = list_maker.process_attribute('first_name','patrick')
 
     assert_equal 1, result.count
 
     pat = result[0]
 
-    assert_equal 'Parker', pat.last_name
+    assert_equal 'parker', pat.last_name
   end
 
   def test_it_can_look_up_by_email
@@ -72,7 +70,7 @@ class ListMakerTest < Minitest::Test
 
     scott = result[0]
 
-    assert_equal 'Parker', scott.last_name
+    assert_equal 'parker', scott.last_name
 
   end
 
@@ -84,14 +82,14 @@ class ListMakerTest < Minitest::Test
     ]
 
     list_maker = ListMaker.new(entries)
-    result = list_maker.process_attribute('street','4509 Frankford Avenue')
+    result = list_maker.process_attribute('street','4509 frankford avenue')
 
     assert_equal 1, result.count
 
     patrick = result[0]
 
-    assert_equal '718-305-4000', patrick.home_phone
-    assert_equal 'Parker', patrick.last_name
+    assert_equal '7183054000', patrick.home_phone
+    assert_equal 'parker', patrick.last_name
   end
 
   def test_it_can_lookup_by_city
@@ -102,13 +100,13 @@ class ListMakerTest < Minitest::Test
     ]
 
     list_maker = ListMaker.new(entries)
-    result = list_maker.process_attribute('city','Philadelphia')
+    result = list_maker.process_attribute('city','philadelphia')
 
     assert_equal 1, result.count
 
     pat = result[0]
 
-    assert_equal '718-305-4000', pat.home_phone
+    assert_equal '7183054000', pat.home_phone
   end
 
   def test_it_can_lookup_by_state
@@ -119,13 +117,13 @@ class ListMakerTest < Minitest::Test
     ]
 
     list_maker = ListMaker.new(entries)
-    result = list_maker.process_attribute('state','PA')
+    result = list_maker.process_attribute('state','pa')
 
     assert_equal 2, result.count
 
     greg, pat = result
 
-    assert_equal '718-305-4000', pat.home_phone
+    assert_equal '7183054000', pat.home_phone
     assert_equal '15208', greg.zipcode
   end
 
@@ -143,7 +141,7 @@ class ListMakerTest < Minitest::Test
 
     scott = result[0]
 
-    assert_equal '202-270-1000', scott.home_phone
+    assert_equal '2022701000', scott.home_phone
   end
 
 end
