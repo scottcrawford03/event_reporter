@@ -11,29 +11,33 @@ class Processor
               :messages,
               :output,
               :input,
-              :list_maker
+              :list_maker,
+              :new_queue,
+              :result
 
   def initialize(input, output)
+    @messages    = Messages.new
+    @new_queue   = Queue.new
     @output      = output
     @input       = input
     @command     = nil
     @instruction = instruction
     @criteria    = criteria
     @attribute   = attribute
-    @messages    = Messages.new
     @list_maker  = list_maker
+    @result      = result
   end
 
   def process(command)
     @instruction, @criteria, @attribute = account_for_to_or_by(command.split)
-    # case instruction
-    # when 'load'  then loader(criteria)
-    # when 'find'  then find(criteria, attribute)
-    # when 'queue'
-    # when 'help'
-    # when 'quit'
-    # else output.puts messages.invalid_input
-    # end
+    case instruction
+    when 'load'  then loader(criteria)
+    when 'find'  then find(criteria, attribute)
+    when 'queue' then queue_commands(criteria)
+    when 'help'
+    when 'quit'
+    else output.puts messages.invalid_input
+    end
   end
 
   def account_for_to_or_by(command)
@@ -41,7 +45,14 @@ class Processor
     command
   end
 
+  def queue_commands(criteria)
+    case criteria
+    when 'print' then output.puts new_queue.inspect
+    when 'clear' then new_queue.clear
+    when 'count'  then output.puts new_queue.count
+    end
 
+  end
 
   def loader(csv_file)
     if File.exist?("#{csv_file}")
@@ -56,5 +67,6 @@ class Processor
 
   def find(criteria, attribute)
     result = list_maker.process_attribute(criteria, attribute)
+    @new_queue = result
   end
 end

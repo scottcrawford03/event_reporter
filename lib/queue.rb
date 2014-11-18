@@ -5,12 +5,6 @@ class Queue
     @queue = []
   end
 
-  def add(result)
-    result.each_index do |index|
-      queue << result[index]
-    end
-  end
-
   def empty?
     queue.empty?
   end
