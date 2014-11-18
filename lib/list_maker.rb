@@ -1,5 +1,4 @@
 require_relative 'attendee'
-require 'pry'
 
 class ListMaker
   attr_reader :list_of_attendees, :organized_list_of_attendees
@@ -9,7 +8,6 @@ class ListMaker
   end
 
   def process_attribute(criteria, attribute)
-    binding.pry
     organized_list_of_attendees.select { |attendee| attendee.send(criteria) == attribute }.sort_by { |attendee| attendee.last_name }
   end
 

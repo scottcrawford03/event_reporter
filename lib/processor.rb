@@ -26,14 +26,14 @@ class Processor
 
   def process(command)
     @instruction, @criteria, @attribute = account_for_to_or_by(command.split)
-    case instruction
-    when 'load'  then loader(criteria)
-    when 'find'  then find(criteria, attribute)
-    when 'queue'
-    when 'help'
-    when 'quit'
-    else output.puts messages.invalid_input
-    end
+    # case instruction
+    # when 'load'  then loader(criteria)
+    # when 'find'  then find(criteria, attribute)
+    # when 'queue'
+    # when 'help'
+    # when 'quit'
+    # else output.puts messages.invalid_input
+    # end
   end
 
   def account_for_to_or_by(command)
@@ -42,13 +42,15 @@ class Processor
   end
 
 
+
   def loader(csv_file)
-    if csv_file
+    if File.exist?("#{csv_file}")
       list_of_attendees = LoadFile.load_csv(csv_file)
-    else
-      list_of_attendees = LoadFile.load_csv('event_attendees.csv')
-    end
       output.puts messages.loaded_success
+    elsif
+      list_of_attendees = LoadFile.load_csv('event_attendees.csv')
+      output.puts messages.loaded_success
+    end
     @list_maker  = ListMaker.new(list_of_attendees)
   end
 
