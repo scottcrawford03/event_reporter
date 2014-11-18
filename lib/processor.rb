@@ -29,7 +29,7 @@ class Processor
   end
 
   def process(command)
-    @instruction, @criteria, @attribute = account_for_to_or_by(command.split)
+    @instruction, @criteria, *@attribute = account_for_to_or_by(command.split)
     case instruction
     when 'load'  then loader(criteria)
     when 'find'  then find(criteria, attribute)
@@ -74,14 +74,15 @@ class Processor
     File.open(csv_file, 'w') do |file|
       file << ['last_Name','first_Name','Email_Address','HomePhone','Street','City','State','Zipcode']
       file << attendee_traits
-    end
+      end
   end
+
 
   def find(criteria, attribute)
     if criteria == 'home_phone' || criteria == 'zipcode'
     result = list_maker.process_attribute(criteria, cleaner(criteria, attribute))
     else
-    result = list_maker.process_attribute(criteria, attribute)
+    result = list_maker.process_attribute(criteria, attribute.join(' '))
     end
     @new_queue = result
   end
