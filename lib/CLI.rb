@@ -1,5 +1,4 @@
 require_relative '../lib/messages'
-require_relative '../lib/event_manager'
 require_relative '../lib/processor'
 
 class CLI
@@ -10,21 +9,21 @@ class CLI
               :processor
 
   def initialize(input, output)
-    @input     = input
-    @output    = output
-    @command   = ''
-    @messages  = Messages.new
-    @processor = Processor.new(input, output)
-
+    @input             = input
+    @output            = output
+    @command           = ''
+    @messages          = Messages.new
+    @processor         = Processor.new(input, output)
   end
 
   def search
     output.puts messages.intro_message
     until quit?
-      @command = input.gets.chomp.downcase
+      @command = input.gets.chomp
       process_commands(command)
     end
   end
+
 
   def quit?
     command == "q" || command == "quit"
@@ -33,5 +32,4 @@ class CLI
   def process_commands(command)
     processor.process(command)
   end
-
 end

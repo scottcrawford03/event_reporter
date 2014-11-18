@@ -1,7 +1,6 @@
 gem 'minitest', '~> 5.2'
 require 'minitest/autorun'
 require 'minitest/pride'
-require_relative '../lib/event_manager'
 require_relative '../lib/messages'
 
 class IntegrationTest < Minitest::Test

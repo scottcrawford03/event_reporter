@@ -1,9 +1,9 @@
 gem 'minitest', '~> 5.2'
 require 'minitest/autorun'
 require 'minitest/pride'
-require_relative '../lib/attendees'
+require_relative '../lib/attendee'
 
-class AttendeesTest < Minitest::Test
+class AttendeeTest < Minitest::Test
   def test_attendees_attributes
     data = {
       RegDate:       '1/31/09',
@@ -16,7 +16,7 @@ class AttendeesTest < Minitest::Test
       State:         'PA',
       Zipcode:       '15208'
     }
-    entry = Attendees.new(data)
+    entry = Attendee.new(data)
 
     assert_equal '1/31/09', entry.date
     assert_equal 'Gregory', entry.first_name
