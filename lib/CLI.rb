@@ -1,10 +1,10 @@
-require_relative '../lib/messages'
+require_relative '../lib/printer'
 require_relative '../lib/processor'
 
 class CLI
   attr_reader :input,
               :output,
-              :messages,
+              :printer,
               :command,
               :processor
 
@@ -12,12 +12,12 @@ class CLI
     @input             = input
     @output            = output
     @command           = ''
-    @messages          = Messages.new
+    @printer           = Printer.new
     @processor         = Processor.new(input, output)
   end
 
   def search
-    output.puts messages.intro_message
+    output.puts printer.intro_message
     until quit?
       @command = input.gets.chomp
       process_commands(command)

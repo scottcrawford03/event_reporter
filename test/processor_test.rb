@@ -6,6 +6,7 @@ require_relative '../lib/processor'
 class ProcessorTest < Minitest::Test
 
   def test_it_splits_input_into_three_categories
+    skip
     command = "Find first_name Gregory"
     processor = Processor.new("input", "output")
     processed_array = processor.process(command)
@@ -14,6 +15,7 @@ class ProcessorTest < Minitest::Test
   end
 
   def test_it_saves_it_to_three_different_values
+    skip
     command = "Find first_name Gregory"
     processor = Processor.new("input", "output")
     processor.process(command)
