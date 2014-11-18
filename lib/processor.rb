@@ -42,13 +42,13 @@ class Processor
   end
 
 
-  def loader(csv_file = 'event_attendees.csv')
+  def loader(csv_file)
     if csv_file
       list_of_attendees = LoadFile.load_csv(csv_file)
     else
       list_of_attendees = LoadFile.load_csv('event_attendees.csv')
-      output.puts messages.loaded_success
     end
+      output.puts messages.loaded_success
     @list_maker  = ListMaker.new(list_of_attendees)
   end
 
