@@ -49,8 +49,8 @@ class Processor
     case criteria
     when 'print' then queue_print
     when 'clear' then new_queue.clear
-    when 'count'  then output.puts new_queue.count
-    when ''
+    when 'count' then output.puts new_queue.count
+    when 'save'  then saver(attribute)
     end
 
   end
@@ -68,6 +68,13 @@ class Processor
       output.puts printer.loaded_success
     end
     @list_maker  = ListMaker.new(list_of_attendees)
+  end
+
+  def saver(csv_file)
+    File.open(csv_file, 'w') do |file|
+      file << ['last_Name','first_Name','Email_Address','HomePhone','Street','City','State','Zipcode']
+      file << attendee_traits
+    end
   end
 
   def find(criteria, attribute)
@@ -89,6 +96,12 @@ class Processor
 
   def zipcode_cleaner(zip)
     zip.to_s.rjust(5,'0')
+  end
+
+  def attendee_traits
+    new_queue.map do |attendee|
+      attendee.instance_variables.map { |ivar| attendee.instance_variable_get(ivar)}
+    end
   end
 
 end
