@@ -8,4 +8,8 @@ class Messages
     'Your input is invalid. Please try again.'
   end
 
+  def loaded_success
+    "Your file has been loaded successfully!"
+  end
+  
 end

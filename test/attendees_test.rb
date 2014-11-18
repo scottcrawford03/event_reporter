@@ -1,22 +1,22 @@
 gem 'minitest', '~> 5.2'
 require 'minitest/autorun'
 require 'minitest/pride'
-require_relative '../lib/attendees'
+require_relative '../lib/attendee'
 
-class AttendeesTest < Minitest::Test
+class AttendeeTest < Minitest::Test
   def test_attendees_attributes
     data = {
-      RegDate:       '1/31/09',
-      first_Name:    'Gregory',
-      last_Name:     'Parker',
-      Email_Address: 'jhopenh1@jumpstartlab.com',
-      HomePhone:     '718-305-4000',
-      Street:        '7123 Penn Avenue, #3',
-      City:          'Pittsburgh',
-      State:         'PA',
-      Zipcode:       '15208'
+      regdate:       '1/31/09',
+      first_name:    'Gregory',
+      last_name:     'Parker',
+      email_address: 'jhopenh1@jumpstartlab.com',
+      homephone:     '718-305-4000',
+      street:        '7123 Penn Avenue, #3',
+      city:          'Pittsburgh',
+      state:         'PA',
+      zipcode:       '15208'
     }
-    entry = Attendees.new(data)
+    entry = Attendee.new(data)
 
     assert_equal '1/31/09', entry.date
     assert_equal 'Gregory', entry.first_name

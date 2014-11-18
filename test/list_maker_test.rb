@@ -7,15 +7,15 @@ require 'pry'
 class ListMakerTest < Minitest::Test
   def test_it_lookup_by_last_name
     entries = [
-      { first_Name: 'Gregory', last_Name: 'Parker', HomePhone: '718-305-4000' },
-      { first_Name: 'Patrick', last_Name: 'Parker', HomePhone: '718-305-4000' },
-      { first_Name: 'Cindy', last_Name: 'Johnson', HomePhone: '333.333.3333' }
+      { regdate: '1/31/09 23:00', first_name: 'Gregory', last_name: 'Parker', email_address: 'jhopenh1@jumpstartlab.com', homephone: '718-305-4000', street: '7123 Penn Avenue, #3', city: 'Pittsburgh', state: 'PA', zipcode: '15208' },
+      { regdate: '2/1/09 17:05', first_name: 'Patrick', last_name: 'Parker', email_address: 'qkika_farrell@jumpstartlab.com', homephone: '718-305-4000', street: '4509 Frankford Avenue', city: 'Philadelphia', state: 'PA', zipcode: '19214' },
+      { regdate: '2/1/09 20:53', first_name: 'Scott', last_name: 'Parker', email_address: 'qhuer321@jumpstartlab.com', homephone: '202-270-1000', street: '19308 Alderbarn Ct', city: 'Brookeville', state: 'MD', zipcode: '20833'}
     ]
 
     list_maker = ListMaker.new(entries)
-    result = list_maker.process_last_name("Parker")
+    result = list_maker.process_attribute('last_name', 'Parker')
 
-    assert_equal 2, result.count
+    assert_equal 3, result.count
 
     greg, pat = result
 
@@ -25,13 +25,13 @@ class ListMakerTest < Minitest::Test
 
   def test_it_can_look_up_by_phone_number
     entries = [
-      { first_Name: 'Gregory', last_Name: 'Parker', HomePhone: '718-305-4000' },
-      { first_Name: 'Patrick', last_Name: 'Smith', HomePhone: '718-305-4000' },
-      { first_Name: 'Cindy', last_Name: 'Johnson', HomePhone: '333.333.3333' }
+      { regdate: '1/31/09 23:00', first_name: 'Gregory', last_name: 'Parker', email_address: 'jhopenh1@jumpstartlab.com', homephone: '718-305-4000', street: '7123 Penn Avenue, #3', city: 'Pittsburgh', state: 'PA', zipcode: '15208' },
+      { regdate: '2/1/09 17:05', first_name: 'Patrick', last_name: 'Parker', email_address: 'qkika_farrell@jumpstartlab.com', homephone: '718-305-4000', street: '4509 Frankford Avenue', city: 'Philadelphia', state: 'PA', zipcode: '19214' },
+      { regdate: '2/1/09 20:53', first_name: 'Scott', last_name: 'Parker', email_address: 'qhuer321@jumpstartlab.com', homephone: '202-270-1000', street: '19308 Alderbarn Ct', city: 'Brookeville', state: 'MD', zipcode: '20833'}
     ]
 
     list_maker = ListMaker.new(entries)
-    result = list_maker.process_home_phone('718-305-4000')
+    result = list_maker.process_attribute('home_phone','718-305-4000')
 
     assert_equal 2, result.count
 
@@ -43,30 +43,30 @@ class ListMakerTest < Minitest::Test
 
   def test_it_can_look_up_by_first_name
     entries = [
-      { first_Name: 'Gregory', last_Name: 'Parker', HomePhone: '718-305-4000' },
-      { first_Name: 'Patrick', last_Name: 'Smith', HomePhone: '718-305-4000' },
-      { first_Name: 'Cindy', last_Name: 'Johnson', HomePhone: '333.333.3333' }
+      { regdate: '1/31/09 23:00', first_name: 'Gregory', last_name: 'Parker', email_address: 'jhopenh1@jumpstartlab.com', homephone: '718-305-4000', street: '7123 Penn Avenue, #3', city: 'Pittsburgh', state: 'PA', zipcode: '15208' },
+      { regdate: '2/1/09 17:05', first_name: 'Patrick', last_name: 'Parker', email_address: 'qkika_farrell@jumpstartlab.com', homephone: '718-305-4000', street: '4509 Frankford Avenue', city: 'Philadelphia', state: 'PA', zipcode: '19214' },
+      { regdate: '2/1/09 20:53', first_name: 'Scott', last_name: 'Parker', email_address: 'qhuer321@jumpstartlab.com', homephone: '202-270-1000', street: '19308 Alderbarn Ct', city: 'Brookeville', state: 'MD', zipcode: '20833'}
     ]
 
     list_maker = ListMaker.new(entries)
-    result = list_maker.process_first_name('Patrick')
+    result = list_maker.process_attribute('first_name','Patrick')
 
     assert_equal 1, result.count
 
     pat = result[0]
 
-    assert_equal 'Smith', pat.last_name
+    assert_equal 'Parker', pat.last_name
   end
 
   def test_it_can_look_up_by_email
     entries = [
-      { RegDate: '1/31/09 23:00', first_Name: 'Gregory', last_Name: 'Parker', Email_Address: 'jhopenh1@jumpstartlab.com', HomePhone: '718-305-4000', Street: '7123 Penn Avenue, #3', City: 'Pittsburgh', State: 'PA', Zipcode: '15208' },
-      { RegDate: '2/1/09 17:05', first_Name: 'Patrick', last_Name: 'Parker', Email_Address: 'qkika_farrell@jumpstartlab.com', HomePhone: '718-305-4000', Street: '4509 Frankford Avenue', City: 'Philadelphia', State: 'PA', Zipcode: '19214' },
-      { RegDate: '2/1/09 20:53', first_Name: 'Scott', last_Name: 'Parker', Email_Address: 'qhuer321@jumpstartlab.com', HomePhone: '202-270-1000', Street: '19308 Alderbarn Ct', City: 'Brookeville', State: 'MD', Zipcode: '20833'}
+      { regdate: '1/31/09 23:00', first_name: 'Gregory', last_name: 'Parker', email_address: 'jhopenh1@jumpstartlab.com', homephone: '718-305-4000', street: '7123 Penn Avenue, #3', city: 'Pittsburgh', state: 'PA', zipcode: '15208' },
+      { regdate: '2/1/09 17:05', first_name: 'Patrick', last_name: 'Parker', email_address: 'qkika_farrell@jumpstartlab.com', homephone: '718-305-4000', street: '4509 Frankford Avenue', city: 'Philadelphia', state: 'PA', zipcode: '19214' },
+      { regdate: '2/1/09 20:53', first_name: 'Scott', last_name: 'Parker', email_address: 'qhuer321@jumpstartlab.com', homephone: '202-270-1000', street: '19308 Alderbarn Ct', city: 'Brookeville', state: 'MD', zipcode: '20833'}
     ]
 
     list_maker = ListMaker.new(entries)
-    result = list_maker.process_email('qhuer321@jumpstartlab.com')
+    result = list_maker.process_attribute('email','qhuer321@jumpstartlab.com')
 
     assert_equal 1, result.count
 
@@ -78,13 +78,13 @@ class ListMakerTest < Minitest::Test
 
   def test_it_can_lookup_by_street
     entries = [
-      { RegDate: '1/31/09 23:00', first_Name: 'Gregory', last_Name: 'Parker', Email_Address: 'jhopenh1@jumpstartlab.com', HomePhone: '718-305-4000', Street: '7123 Penn Avenue, #3', City: 'Pittsburgh', State: 'PA', Zipcode: '15208' },
-      { RegDate: '2/1/09 17:05', first_Name: 'Patrick', last_Name: 'Parker', Email_Address: 'qkika_farrell@jumpstartlab.com', HomePhone: '718-305-4000', Street: '4509 Frankford Avenue', City: 'Philadelphia', State: 'PA', Zipcode: '19214' },
-      { RegDate: '2/1/09 20:53', first_Name: 'Scott', last_Name: 'Parker', Email_Address: 'qhuer321@jumpstartlab.com', HomePhone: '202-270-1000', Street: '19308 Alderbarn Ct', City: 'Brookeville', State: 'MD', Zipcode: '20833'}
+      { regdate: '1/31/09 23:00', first_name: 'Gregory', last_name: 'Parker', email_address: 'jhopenh1@jumpstartlab.com', homephone: '718-305-4000', street: '7123 Penn Avenue, #3', city: 'Pittsburgh', state: 'PA', zipcode: '15208' },
+      { regdate: '2/1/09 17:05', first_name: 'Patrick', last_name: 'Parker', email_address: 'qkika_farrell@jumpstartlab.com', homephone: '718-305-4000', street: '4509 Frankford Avenue', city: 'Philadelphia', state: 'PA', zipcode: '19214' },
+      { regdate: '2/1/09 20:53', first_name: 'Scott', last_name: 'Parker', email_address: 'qhuer321@jumpstartlab.com', homephone: '202-270-1000', street: '19308 Alderbarn Ct', city: 'Brookeville', state: 'MD', zipcode: '20833'}
     ]
 
     list_maker = ListMaker.new(entries)
-    result = list_maker.process_street('4509 Frankford Avenue')
+    result = list_maker.process_attribute('street','4509 Frankford Avenue')
 
     assert_equal 1, result.count
 
@@ -96,13 +96,13 @@ class ListMakerTest < Minitest::Test
 
   def test_it_can_lookup_by_city
     entries = [
-      { RegDate: '1/31/09 23:00', first_Name: 'Gregory', last_Name: 'Parker', Email_Address: 'jhopenh1@jumpstartlab.com', HomePhone: '718-305-4000', Street: '7123 Penn Avenue, #3', City: 'Pittsburgh', State: 'PA', Zipcode: '15208' },
-      { RegDate: '2/1/09 17:05', first_Name: 'Patrick', last_Name: 'Parker', Email_Address: 'qkika_farrell@jumpstartlab.com', HomePhone: '718-305-4000', Street: '4509 Frankford Avenue', City: 'Philadelphia', State: 'PA', Zipcode: '19214' },
-      { RegDate: '2/1/09 20:53', first_Name: 'Scott', last_Name: 'Parker', Email_Address: 'qhuer321@jumpstartlab.com', HomePhone: '202-270-1000', Street: '19308 Alderbarn Ct', City: 'Brookeville', State: 'MD', Zipcode: '20833'}
+      { regdate: '1/31/09 23:00', first_name: 'Gregory', last_name: 'Parker', email_address: 'jhopenh1@jumpstartlab.com', homephone: '718-305-4000', street: '7123 Penn Avenue, #3', city: 'Pittsburgh', state: 'PA', zipcode: '15208' },
+      { regdate: '2/1/09 17:05', first_name: 'Patrick', last_name: 'Parker', email_address: 'qkika_farrell@jumpstartlab.com', homephone: '718-305-4000', street: '4509 Frankford Avenue', city: 'Philadelphia', state: 'PA', zipcode: '19214' },
+      { regdate: '2/1/09 20:53', first_name: 'Scott', last_name: 'Parker', email_address: 'qhuer321@jumpstartlab.com', homephone: '202-270-1000', street: '19308 Alderbarn Ct', city: 'Brookeville', state: 'MD', zipcode: '20833'}
     ]
 
     list_maker = ListMaker.new(entries)
-    result = list_maker.process_city('Philadelphia')
+    result = list_maker.process_attribute('city','Philadelphia')
 
     assert_equal 1, result.count
 
@@ -113,13 +113,13 @@ class ListMakerTest < Minitest::Test
 
   def test_it_can_lookup_by_state
     entries = [
-      { RegDate: '1/31/09 23:00', first_Name: 'Gregory', last_Name: 'Parker', Email_Address: 'jhopenh1@jumpstartlab.com', HomePhone: '718-305-4000', Street: '7123 Penn Avenue, #3', City: 'Pittsburgh', State: 'PA', Zipcode: '15208' },
-      { RegDate: '2/1/09 17:05', first_Name: 'Patrick', last_Name: 'Parker', Email_Address: 'qkika_farrell@jumpstartlab.com', HomePhone: '718-305-4000', Street: '4509 Frankford Avenue', City: 'Philadelphia', State: 'PA', Zipcode: '19214' },
-      { RegDate: '2/1/09 20:53', first_Name: 'Scott', last_Name: 'Parker', Email_Address: 'qhuer321@jumpstartlab.com', HomePhone: '202-270-1000', Street: '19308 Alderbarn Ct', City: 'Brookeville', State: 'MD', Zipcode: '20833'}
+      { regdate: '1/31/09 23:00', first_name: 'Gregory', last_name: 'Parker', email_address: 'jhopenh1@jumpstartlab.com', homephone: '718-305-4000', street: '7123 Penn Avenue, #3', city: 'Pittsburgh', state: 'PA', zipcode: '15208' },
+      { regdate: '2/1/09 17:05', first_name: 'Patrick', last_name: 'Parker', email_address: 'qkika_farrell@jumpstartlab.com', homephone: '718-305-4000', street: '4509 Frankford Avenue', city: 'Philadelphia', state: 'PA', zipcode: '19214' },
+      { regdate: '2/1/09 20:53', first_name: 'Scott', last_name: 'Parker', email_address: 'qhuer321@jumpstartlab.com', homephone: '202-270-1000', street: '19308 Alderbarn Ct', city: 'Brookeville', state: 'MD', zipcode: '20833'}
     ]
 
     list_maker = ListMaker.new(entries)
-    result = list_maker.process_state('PA')
+    result = list_maker.process_attribute('state','PA')
 
     assert_equal 2, result.count
 
@@ -131,13 +131,13 @@ class ListMakerTest < Minitest::Test
 
   def test_it_can_lookup_by_zipcode
     entries = [
-      { RegDate: '1/31/09 23:00', first_Name: 'Gregory', last_Name: 'Parker', Email_Address: 'jhopenh1@jumpstartlab.com', HomePhone: '718-305-4000', Street: '7123 Penn Avenue, #3', City: 'Pittsburgh', State: 'PA', Zipcode: '15208' },
-      { RegDate: '2/1/09 17:05', first_Name: 'Patrick', last_Name: 'Parker', Email_Address: 'qkika_farrell@jumpstartlab.com', HomePhone: '718-305-4000', Street: '4509 Frankford Avenue', City: 'Philadelphia', State: 'PA', Zipcode: '19214' },
-      { RegDate: '2/1/09 20:53', first_Name: 'Scott', last_Name: 'Parker', Email_Address: 'qhuer321@jumpstartlab.com', HomePhone: '202-270-1000', Street: '19308 Alderbarn Ct', City: 'Brookeville', State: 'MD', Zipcode: '20833'}
+      { regdate: '1/31/09 23:00', first_name: 'Gregory', last_name: 'Parker', email_address: 'jhopenh1@jumpstartlab.com', homephone: '718-305-4000', street: '7123 Penn Avenue, #3', city: 'Pittsburgh', state: 'PA', zipcode: '15208' },
+      { regdate: '2/1/09 17:05', first_name: 'Patrick', last_name: 'Parker', email_address: 'qkika_farrell@jumpstartlab.com', homephone: '718-305-4000', street: '4509 Frankford Avenue', city: 'Philadelphia', state: 'PA', zipcode: '19214' },
+      { regdate: '2/1/09 20:53', first_name: 'Scott', last_name: 'Parker', email_address: 'qhuer321@jumpstartlab.com', homephone: '202-270-1000', street: '19308 Alderbarn Ct', city: 'Brookeville', state: 'MD', zipcode: '20833'}
     ]
 
     list_maker = ListMaker.new(entries)
-    result = list_maker.process_zipcode('20833')
+    result = list_maker.process_attribute('zipcode','20833')
 
     assert_equal 1, result.count
 
