@@ -1,3 +1,4 @@
+require_relative 'cleaner'
 class Attendee
   attr_reader :date,
               :first_name,
@@ -11,14 +12,14 @@ class Attendee
 
   def initialize(data)
     # @date       = data[:regdate]
-    @last_name    = data[:last_name]
-    @first_name   = data[:first_name]
-    @email        = data[:email_address]
-    @home_phone   = data[:homephone]
-    @street       = data[:street]
-    @city         = data[:city]
-    @state        = data[:state]
-    @zipcode      = data[:zipcode]
+    @last_name    = Cleaner.new.clean(data[:last_name])
+    @first_name   = Cleaner.new.clean(data[:first_name])
+    @email        = Cleaner.new.clean(data[:email_address])
+    @home_phone   = Cleaner.new.clean_phone_number(data[:homephone])
+    @street       = Cleaner.new.clean(data[:street])
+    @city         = Cleaner.new.clean(data[:city])
+    @state        = Cleaner.new.clean(data[:state])
+    @zipcode      = Cleaner.new.clean_zip_code(data[:zipcode])
   end
 
   def name
