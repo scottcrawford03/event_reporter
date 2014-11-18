@@ -10,9 +10,9 @@ class Attendee
               :zipcode
 
   def initialize(data)
-    @date         = data[:regdate]
-    @first_name   = data[:first_name]
+    # @date       = data[:regdate]
     @last_name    = data[:last_name]
+    @first_name   = data[:first_name]
     @email        = data[:email_address]
     @home_phone   = data[:homephone]
     @street       = data[:street]
@@ -24,5 +24,14 @@ class Attendee
   def name
     "#{@first_name} #{@last_name}"
   end
+
+  def home_phone
+    @home_phone.to_s.chars.select { |s| s =~ /[0-9]/}.join
+  end
+
+  def zipcode
+    @zipcode.to_s.rjust(5, '0')
+  end
+
 
 end

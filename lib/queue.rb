@@ -9,7 +9,7 @@ class Queue
     queue.empty?
   end
 
-  def size?
+  def count
     queue.count
   end
 

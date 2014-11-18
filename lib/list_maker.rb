@@ -8,7 +8,7 @@ class ListMaker
   end
 
   def process_attribute(criteria, attribute)
-    organized_list_of_attendees.select { |attendee| attendee.send(criteria) == attribute }.sort_by { |attendee| attendee.last_name }
+    organized_list_of_attendees.select { |attendee| attendee.send(criteria) == attribute }
   end
 
 end
