@@ -36,7 +36,7 @@ class Processor
     when 'load'  then loader(criteria)
     when 'find'  then find(criteria, attribute)
     when 'queue' then queue_commands(criteria, attribute)
-    when 'help'
+    when 'help'  then help_commands(criteria, attribute)
     when 'quit'
     else output.puts printer.invalid_input
     end
@@ -45,6 +45,29 @@ class Processor
   def account_for_to_or_by(command)
     command.delete_at(2) if command[2] == 'to' || command[2] == 'by'
     command
+  end
+
+  def help_commands(criteria = nil, attribute = nil)
+    if criteria.nil?
+      output.puts printer.help_commands
+    else
+      case criteria
+      when 'quit' then puts printer.help_quit
+      when 'load' then puts printer.help_load
+      when 'find' then puts printer.help_find
+      when 'queue' then help_queue_commands(attribute)
+      when 'search' then puts printer.search_options
+      end
+    end
+  end
+
+  def help_queue_commands(attribute)
+    case attribute
+    when ['count'] then puts printer.help_queue_count
+    when ['clear'] then puts printer.help_queue_clear
+    when ['print'] then puts printer.help_queue_print
+    when ['save'] then puts printer.help_queue_save
+    end
   end
 
   def queue_commands(criteria, attribute = nil)
