@@ -1,6 +1,7 @@
 require_relative 'printer'
 require_relative 'csv_parser'
 require_relative 'list_maker'
+require_relative 'table_maker'
 
 class Processor
   attr_reader :command,
@@ -13,10 +14,12 @@ class Processor
               :list_maker,
               :new_queue,
               :result,
-              :list_of_attendees
+              :list_of_attendees,
+              :table
 
   def initialize(input, output)
     @printer           = Printer.new
+    @table             = TableMaker.new
     @new_queue         = []
     @output            = output
     @input             = input
@@ -84,10 +87,14 @@ class Processor
 
   def queue_print(attribute)
     if attribute.empty?
-    printer.queue_printer(new_queue)
+    table.update(new_queue)
+    output.puts table.show
+    # printer.queue_printer(new_queue)
     else
     sort = new_queue.sort_by! { |attendee| attendee.send(attribute) }
-    printer.queue_printer(sort)
+    sorted_table = TableMaker.new
+    sorted_table.update(sort)
+    output.puts sorted_table.show
     end
   end
 
