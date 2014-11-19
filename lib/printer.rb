@@ -1,7 +1,7 @@
 class Printer
 
   def intro_message
-    "Welcome to Event Reporter!\nType 'help' for a list of commands"
+    "Welcome to Event Reporter!\nType 'help' at any time for a list of commands"
   end
 
   def invalid_input
@@ -13,7 +13,7 @@ class Printer
   end
 
   def save_header
-  'last_Name,first_Name,Email_Address,HomePhone,Street,City,State,Zipcode'
+    'last_Name,first_Name,Email_Address,HomePhone,Street,City,State,Zipcode'
   end
 
   def print_header
@@ -42,7 +42,7 @@ class Printer
   end
 
   def help_commands
-    "Event Reporter comes with a list of of helpful commands.\nType 'help' followed by the command to learn more. Ex. help queue count\n\n\tquit\n\tload\n\tfind\n\tqueue count\n\tqueue clear\n\tqueue print\n\tqueue save\n\tsearch options"
+    "Event Reporter comes with a list of of helpful commands.\nType 'help' followed by the command to learn more about each command. Ex. help queue count\n\n\tquit\n\tload\n\tfind\n\tqueue count\n\tqueue clear\n\tqueue print\n\tqueue save\n\tsearch options"
   end
 
   def help_quit
@@ -54,7 +54,7 @@ class Printer
   end
 
   def help_find
-    "\nAfter a file has been loaded you can search the contents of the file by indicating your search criteria.\nEx. find last_name smith (This search will return all attendees with a last name of 'smith')\nFor a list of search options type 'help search options'"
+    "\nAfter a file has been loaded you can search the contents of the file by indicating your search criteria.\nEx. find last_name smith (This search will return all attendees with a last name of 'smith')\nFor a list of search criteria options please type 'help search options'"
   end
 
   def help_queue_count
