@@ -8,11 +8,8 @@ class Cleaner
   end
 
   def clean_phone_number(phone)
-    if phone.nil?
-      'XXX'
-    else
-      phone.to_s.chars.select { |s| s =~ /[0-9]/ }.join
-    end
+    phone.to_s.gsub(/\D/,"").match(/^1?(\d{3})(\d{3})(\d{4})/)
+    [$1,$2,$3].join("-")
   end
 
   def clean_zip_code(zip)
