@@ -26,7 +26,7 @@ class Processor
     @command           = nil
     @instruction       = instruction
     @criteria          = criteria
-    @attribute         =  attribute
+    @attribute         = attribute
     @list_maker        = list_maker
     @result            = result
     @list_of_attendees = []
@@ -34,17 +34,19 @@ class Processor
 
   def process_commands(command)
     @instruction, @criteria, *@attribute = account_for_to_or_by(command.split)
+    process_instruction(criteria, attribute)
+  end
+
+  def process_instruction(criteria, attribute)
     case instruction
     when 'load'     then loader(criteria)
     when 'find'     then find(criteria, attribute)
     when 'queue'    then queue_commands(criteria, attribute)
     when 'help'     then help_commands(criteria, attribute)
-    when 'quit'     then output.puts "goodbye."
+    when 'quit'     then output.puts printer.quit_message
     else output.puts printer.invalid_input
     end
   end
-
-
 
   def account_for_to_or_by(command)
     command.delete_at(2) if command[2] == 'to' || command[2] == 'by'
@@ -82,28 +84,30 @@ class Processor
     when 'save'  then write_to_csv(attribute[0])
     when 'help'  then queue_help
     end
-
   end
 
   def queue_print(attribute)
     if attribute.empty?
-    table.update(new_queue)
-    output.puts table.show
-    # printer.queue_printer(new_queue)
+      table.update(new_queue)
+      output.puts table.show
     else
+      sorted_queue_print(attribute)
+    end
+  end
+
+  def sorted_queue_print(attribute)
     sort = new_queue.sort_by! { |attendee| attendee.send(attribute) }
     sorted_table = TableMaker.new
     sorted_table.update(sort)
     output.puts sorted_table.show
-    end
   end
 
   def queue_counter
     output.puts printer.queue_size(new_queue.count)
   end
 
-  def loader(csv_file )
-    if csv_file != nil && File.exist?("csv/#{csv_file}")
+  def loader(csv_file)
+    if !csv_file.nil? && File.exist?("csv/#{csv_file}")
       @list_of_attendees = CSVParser.load_csv(csv_file)
       output.puts printer.loaded_success
     else
@@ -117,16 +121,15 @@ class Processor
     CSVParser.save_csv(csv_file, attendee_traits)
   end
 
-
   def find(criteria, attribute)
     if list_of_attendees.empty?
-      output.puts "You must load a file first."
+      output.puts printer.load_file_first
     elsif criteria == 'home_phone' || criteria == 'zipcode'
-    result = list_maker.process_attribute(criteria, cleaner(criteria, attribute))
-    output.puts printer.after_search
+      result = list_maker.process_attribute(criteria, cleaner(criteria, attribute))
+      output.puts printer.after_search
     else
-    result = list_maker.process_attribute(criteria, attribute.join(' '))
-    output.puts printer.after_search
+      result = list_maker.process_attribute(criteria, attribute.join(' '))
+      output.puts printer.after_search
     end
     @new_queue = result if result
   end
@@ -136,13 +139,11 @@ class Processor
     when 'home_phone' then Cleaner.new.clean_phone_number(attribute)
     when 'zipcode'    then Cleaner.new.clean_zip_code(attribute)
     end
-
   end
 
   def attendee_traits
     new_queue.map do |attendee|
-      attendee.instance_variables.map { |ivar| attendee.instance_variable_get(ivar)}
+      attendee.instance_variables.map { |ivar| attendee.instance_variable_get(ivar) }
     end
   end
-
 end
