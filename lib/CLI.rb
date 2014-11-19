@@ -19,8 +19,9 @@ class CLI
   def search
     output.puts printer.intro_message
     until quit?
+      output.print printer.entry_prompt
       @command = input.gets.chomp.downcase
-      process_commands(command)
+      processor.process_commands(command)
     end
   end
 
@@ -29,7 +30,4 @@ class CLI
     command == "q" || command == "quit"
   end
 
-  def process_commands(command)
-    processor.process(command)
-  end
 end

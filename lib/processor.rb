@@ -7,7 +7,6 @@ class Processor
               :instruction,
               :criteria,
               :attribute,
-              :list_maker,
               :printer,
               :output,
               :input,
@@ -30,17 +29,19 @@ class Processor
     @list_of_attendees = []
   end
 
-  def process(command)
+  def process_commands(command)
     @instruction, @criteria, *@attribute = account_for_to_or_by(command.split)
     case instruction
-    when 'load'  then loader(criteria)
-    when 'find'  then find(criteria, attribute)
-    when 'queue' then queue_commands(criteria, attribute)
-    when 'help'  then help_commands(criteria, attribute)
-    when 'quit'
+    when 'load'     then loader(criteria)
+    when 'find'     then find(criteria, attribute)
+    when 'queue'    then queue_commands(criteria, attribute)
+    when 'help'     then help_commands(criteria, attribute)
+    when 'quit'     then output.puts "goodbye."
     else output.puts printer.invalid_input
     end
   end
+
+
 
   def account_for_to_or_by(command)
     command.delete_at(2) if command[2] == 'to' || command[2] == 'by'
@@ -81,7 +82,7 @@ class Processor
 
   end
 
-  def queue_print(attribute = nil)
+  def queue_print(attribute)
     if attribute.empty?
     printer.queue_printer(new_queue)
     else
@@ -95,7 +96,7 @@ class Processor
   end
 
   def loader(csv_file )
-    if csv_file
+    if csv_file != nil && File.exist?("csv/#{csv_file}")
       @list_of_attendees = CSVParser.load_csv(csv_file)
       output.puts printer.loaded_success
     else
@@ -130,10 +131,6 @@ class Processor
     end
 
   end
-
-  # def zipcode_cleaner(zip)
-  #   zip.to_s.rjust(5,'0')
-  # end
 
   def attendee_traits
     new_queue.map do |attendee|
