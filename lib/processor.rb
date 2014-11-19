@@ -54,16 +54,17 @@ class Processor
       when 'load' then puts printer.help_load
       when 'find' then puts printer.help_find
       when 'queue' then help_queue_commands(attribute)
+      when 'search' then puts printer.search_options
       end
     end
   end
 
   def help_queue_commands(attribute)
     case attribute
-    when ['count'] then puts "Queue counting"
-    when ['clear'] then puts "queue clearing"
-    when ['print'] then puts "queue printing"
-    when ['save'] then puts "saving"
+    when ['count'] then puts printer.help_queue_count
+    when ['clear'] then puts printer.help_queue_clear
+    when ['print'] then puts printer.help_queue_print
+    when ['save'] then puts printer.help_queue_save
     end
   end
 
