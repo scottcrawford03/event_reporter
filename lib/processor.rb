@@ -13,19 +13,21 @@ class Processor
               :input,
               :list_maker,
               :new_queue,
-              :result
+              :result,
+              :list_of_attendees
 
   def initialize(input, output)
-    @printer     = Printer.new
-    @new_queue   = []
-    @output      = output
-    @input       = input
-    @command     = nil
-    @instruction = instruction
-    @criteria    = criteria
-    @attribute   = attribute
-    @list_maker  = list_maker
-    @result      = result
+    @printer           = Printer.new
+    @new_queue         = []
+    @output            = output
+    @input             = input
+    @command           = nil
+    @instruction       = instruction
+    @criteria          = criteria
+    @attribute         =  attribute
+    @list_maker        = list_maker
+    @result            = result
+    @list_of_attendees = []
   end
 
   def process(command)
@@ -71,10 +73,10 @@ class Processor
 
   def loader(csv_file )
     if csv_file
-      list_of_attendees = CSVParser.load_csv(csv_file)
+      @list_of_attendees = CSVParser.load_csv(csv_file)
       output.puts printer.loaded_success
     else
-      list_of_attendees = CSVParser.load_csv('event_attendees.csv')
+      @list_of_attendees = CSVParser.load_csv('event_attendees.csv')
       output.puts printer.event_attendees_loaded
     end
     @list_maker  = ListMaker.new(list_of_attendees)
@@ -86,26 +88,29 @@ class Processor
 
 
   def find(criteria, attribute)
-    if criteria == 'home_phone' || criteria == 'zipcode'
+    if list_of_attendees.empty?
+      output.puts "You must load a file first."
+    elsif criteria == 'home_phone' || criteria == 'zipcode'
     result = list_maker.process_attribute(criteria, cleaner(criteria, attribute))
+    output.puts printer.after_search
     else
     result = list_maker.process_attribute(criteria, attribute.join(' '))
-    end
     output.puts printer.after_search
-    @new_queue = result
+    end
+    @new_queue = result if result
   end
 
   def cleaner(criteria, attribute)
     case criteria
-    when 'home_phone' then attribute.to_s.chars.select { |s| s =~ /[0-9]/}.join
-    when 'zipcode'    then zipcode_cleaner(attribute)
+    when 'home_phone' then Cleaner.new.clean_phone_number(attribute)
+    when 'zipcode'    then Cleaner.new.clean_zip_code(attribute)
     end
 
   end
 
-  def zipcode_cleaner(zip)
-    zip.to_s.rjust(5,'0')
-  end
+  # def zipcode_cleaner(zip)
+  #   zip.to_s.rjust(5,'0')
+  # end
 
   def attendee_traits
     new_queue.map do |attendee|
