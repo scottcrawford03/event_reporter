@@ -16,7 +16,6 @@ class AttendeeTest < Minitest::Test
     }
     entry = Attendee.new(data)
 
-    #assert_equal '1/31/09', entry.date
     assert_equal 'gregory', entry.first_name
     assert_equal 'parker', entry.last_name
     assert_equal 'gregory parker', entry.name
