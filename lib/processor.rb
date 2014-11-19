@@ -1,5 +1,5 @@
 require_relative 'printer'
-require_relative 'load_file'
+require_relative 'csv_parser'
 require_relative 'list_maker'
 
 class Processor
@@ -33,7 +33,7 @@ class Processor
     case instruction
     when 'load'  then loader(criteria)
     when 'find'  then find(criteria, attribute)
-    when 'queue' then queue_commands(criteria)
+    when 'queue' then queue_commands(criteria, attribute)
     when 'help'
     when 'quit'
     else output.puts printer.invalid_input
@@ -45,36 +45,43 @@ class Processor
     command
   end
 
-  def queue_commands(criteria)
+  def queue_commands(criteria, attribute = nil)
     case criteria
-    when 'print' then queue_print
+    when 'print' then queue_print(attribute.join(' '))
     when 'clear' then new_queue.clear
-    when 'count' then output.puts new_queue.count
-    when 'save'  then saver(attribute)
+    when 'count' then output.puts queue_counter
+    when 'save'  then write_to_csv(attribute[0])
+    when 'help'  then queue_help
     end
 
   end
 
-  def queue_print
+  def queue_print(attribute = nil)
+    if attribute.empty?
     printer.queue_printer(new_queue)
+    else
+    sort = new_queue.sort_by! { |attendee| attendee.send(attribute) }
+    printer.queue_printer(sort)
+    end
   end
 
-  def loader(csv_file)
-    if File.exist?("#{csv_file}")
-      list_of_attendees = LoadFile.load_csv(csv_file)
+  def queue_counter
+    output.puts printer.queue_size(new_queue.count)
+  end
+
+  def loader(csv_file )
+    if csv_file
+      list_of_attendees = CSVParser.load_csv(csv_file)
       output.puts printer.loaded_success
-    elsif
-      list_of_attendees = LoadFile.load_csv('event_attendees.csv')
-      output.puts printer.loaded_success
+    else
+      list_of_attendees = CSVParser.load_csv('event_attendees.csv')
+      output.puts printer.event_attendees_loaded
     end
     @list_maker  = ListMaker.new(list_of_attendees)
   end
 
-  def saver(csv_file)
-    File.open(csv_file, 'w') do |file|
-      file << ['last_Name','first_Name','Email_Address','HomePhone','Street','City','State','Zipcode']
-      file << attendee_traits
-      end
+  def write_to_csv(csv_file)
+    CSVParser.save_csv(csv_file, attendee_traits)
   end
 
 
@@ -84,6 +91,7 @@ class Processor
     else
     result = list_maker.process_attribute(criteria, attribute.join(' '))
     end
+    output.puts printer.after_search
     @new_queue = result
   end
 

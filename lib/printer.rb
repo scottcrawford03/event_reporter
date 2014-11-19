@@ -25,8 +25,19 @@ class Printer
     puts print_header
     current_queue.each do |attendee|
       attendee.instance_variables.each { |ivar| print "#{attendee.instance_variable_get(ivar)}\t" }
-      puts "\n"
+    puts "\n"
     end
   end
 
+  def after_search
+    "Your search was a success!"
+  end
+
+  def queue_size(latest_queue)
+    "Your Queue has #{latest_queue} item(s) in it."
+  end
+
+  def event_attendees_loaded
+    "The default file Event_Attendees.csv was loaded successfully!"
+  end
 end
