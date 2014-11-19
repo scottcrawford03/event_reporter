@@ -17,6 +17,7 @@ class CLI
   end
 
   def search
+    output.puts printer.intro_art
     output.puts printer.intro_message
     until quit?
       output.print printer.entry_prompt
@@ -25,9 +26,7 @@ class CLI
     end
   end
 
-
   def quit?
-    command == "q" || command == "quit"
+    command == 'q' || command == 'quit'
   end
-
 end

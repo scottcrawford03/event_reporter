@@ -1,7 +1,16 @@
 class Printer
-
   def intro_message
     "Welcome to Event Reporter!\nType 'help' at any time for a list of commands"
+  end
+
+  def intro_art
+    %q(
+          ______                 __     ____                        __
+         / ____/   _____  ____  / /_   / __ \___  ____  ____  _____/ /____  _____
+        / __/ | | / / _ \/ __ \/ __/  / /_/ / _ \/ __ \/ __ \/ ___/ __/ _ \/ ___/
+       / /___ | |/ /  __/ / / / /_   / _, _/  __/ /_/ / /_/ / /  / /_/  __/ /
+      /_____/ |___/\___/_/ /_/\__/  /_/ |_|\___/ .___/\____/_/   \__/\___/_/
+                                              /_/                                )
   end
 
   def invalid_input
@@ -9,32 +18,23 @@ class Printer
   end
 
   def loaded_success
-    "Your file has been loaded successfully!"
+    'Your file has been loaded successfully!'
   end
 
   def entry_prompt
-    "Enter Your Command > "
+    'Enter Your Command > '
   end
 
-  def save_header
-    'last_Name,first_Name,Email_Address,HomePhone,Street,City,State,Zipcode'
+  def load_file_first
+    'You must load a file first.'
   end
 
-  def print_header
-    "Last Name     First Name          Email                            Home Phone     Street                   City     State     Zipcode"
-  end
-
-  def queue_printer(current_queue)
-    # max_length = current_queue.max_by { |attendee| attendee.last_name.length }
-    puts print_header
-    current_queue.each do |attendee|
-      attendee.instance_variables.each { |ivar| print "#{attendee.instance_variable_get(ivar)}\t" }
-    puts "\n"
-    end
+  def quit_message
+    'Goodbye!'
   end
 
   def after_search
-    "Your search is done. Check the queue."
+    'Your search is done. Check the queue.'
   end
 
   def queue_size(latest_queue)
@@ -42,7 +42,7 @@ class Printer
   end
 
   def event_attendees_loaded
-    "The default file Event_Attendees.csv was loaded successfully!"
+    'The default file Event_Attendees.csv was loaded successfully!'
   end
 
   def help_commands
