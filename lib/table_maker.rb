@@ -24,12 +24,11 @@ class TableMaker
                                            "#{attendee.city.capitalize}",
                                            "#{attendee.state.upcase}",
                                            "#{attendee.zipcode}"             ] }
-    @table = create_table
 
+    @table = create_table
   end
 
   def show
     table
   end
-
 end

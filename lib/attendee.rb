@@ -1,7 +1,6 @@
 require_relative 'cleaner'
 class Attendee
-  attr_reader :date,
-              :first_name,
+  attr_reader :first_name,
               :last_name,
               :email,
               :home_phone,
@@ -11,7 +10,6 @@ class Attendee
               :zipcode
 
   def initialize(data)
-    # @date       = data[:regdate]
     @last_name    = Cleaner.new.clean(data[:last_name])
     @first_name   = Cleaner.new.clean(data[:first_name])
     @email        = Cleaner.new.clean(data[:email_address])
@@ -25,14 +23,4 @@ class Attendee
   def name
     "#{@first_name} #{@last_name}"
   end
-
-  def home_phone
-    @home_phone.to_s.chars.select { |s| s =~ /[0-9]/}.join
-  end
-
-  def zipcode
-    @zipcode.to_s.rjust(5, '0')
-  end
-
-
 end

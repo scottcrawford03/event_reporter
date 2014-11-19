@@ -14,12 +14,10 @@ class Processor
               :list_maker,
               :new_queue,
               :result,
-              :list_of_attendees,
-              :table
+              :list_of_attendees
 
   def initialize(input, output)
     @printer           = Printer.new
-    @table             = TableMaker.new
     @new_queue         = []
     @output            = output
     @input             = input
@@ -87,12 +85,18 @@ class Processor
   end
 
   def queue_print(attribute)
+    system "clear"
     if attribute.empty?
-      table.update(new_queue)
-      output.puts table.show
+      empty_table
     else
       sorted_queue_print(attribute)
     end
+  end
+
+  def empty_table
+    empty_table = TableMaker.new
+    empty_table.update(new_queue)
+    output.puts empty_table.show
   end
 
   def sorted_queue_print(attribute)
@@ -127,7 +131,7 @@ class Processor
     elsif criteria == 'home_phone' || criteria == 'zipcode'
       result = list_maker.process_attribute(criteria, cleaner(criteria, attribute))
       output.puts printer.after_search
-    else
+    elsif
       result = list_maker.process_attribute(criteria, attribute.join(' '))
       output.puts printer.after_search
     end
