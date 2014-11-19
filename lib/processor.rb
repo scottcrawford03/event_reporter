@@ -50,15 +50,15 @@ class Processor
       output.puts printer.help_commands
     else
       case criteria
-      when 'quit' then puts "Quitting"
-      when 'load' then puts "loading"
-      when 'find' then puts "finding"
-      when 'queue' then help_queue_commands(attribute)
+      when 'quit' then puts printer.help_quit
+      when 'load' then puts printer.help_load
+      when 'find' then puts printer.help_find
+      when 'queue' then puts help_queue_commands(attribute)
       end
     end
   end
 
-  def help_queue_commands(attribrute)
+  def help_queue_commands(attribute)
     case attribute
     when 'count' then puts "Queue counting"
     when 'clear' then puts "queue clearing"

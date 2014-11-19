@@ -44,4 +44,16 @@ class Printer
   def help_commands
     "Event Reporter comes with a list of of helpful commands.\nType 'help' followed by the command to learn more. Ex. help queue count\n\n\tquit\n\tload\n\tfind\n\tqueue count\n\tqueue clear\n\tqueue print\n\tqueue save"
   end
+
+  def help_quit
+    "\nYou may type 'quit' at any time to exit Event Reporter"
+  end
+
+  def help_load
+    "\nTo load a file please enter 'load' followed by the <filename>\nEx. load new_file.csv\nIf you type 'load' without indicating a specific file the event_attendees.csv will be loaded by default."
+  end
+
+  def help_find
+    "\nAfter a file has been loaded you can search the contents of the file by indicating criteria and attribute.\nEx. find last_name smith (This search will return all attendees with a last name of 'smith')"
+  end
 end
