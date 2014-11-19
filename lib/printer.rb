@@ -30,7 +30,7 @@ class Printer
   end
 
   def after_search
-    "Your search was a success!"
+    "Your search is done. Check the queue."
   end
 
   def queue_size(latest_queue)
