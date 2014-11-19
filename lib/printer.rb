@@ -1,7 +1,7 @@
 class Printer
 
   def intro_message
-    'Welcome to Event Reporter!'
+    "Welcome to Event Reporter!\nType 'help' for a list of commands"
   end
 
   def invalid_input
@@ -39,5 +39,9 @@ class Printer
 
   def event_attendees_loaded
     "The default file Event_Attendees.csv was loaded successfully!"
+  end
+
+  def help_commands
+    "Event Reporter comes with a list of of helpful commands.\nType 'help' followed by the command to learn more. Ex. help queue count\n\n\tquit\n\tload\n\tfind\n\tqueue count\n\tqueue clear\n\tqueue print\n\tqueue save"
   end
 end
