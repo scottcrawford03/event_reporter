@@ -47,7 +47,7 @@ class Processor
   end
 
   def account_for_to_or_by(command)
-    command.delete_at(2) if command[2] == 'to' || command[2] == 'by'
+    command.delete('to') || command.delete('by')
     command
   end
 
@@ -131,6 +131,8 @@ class Processor
     elsif criteria == 'home_phone' || criteria == 'zipcode'
       result = list_maker.process_attribute(criteria, cleaner(criteria, attribute))
       output.puts printer.after_search
+    # elsif criteria == 'to' || criteria == 'by'
+    #   output.puts printer.find_by_invalid
     elsif
       result = list_maker.process_attribute(criteria, attribute.join(' '))
       output.puts printer.after_search

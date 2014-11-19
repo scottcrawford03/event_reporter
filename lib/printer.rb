@@ -17,6 +17,10 @@ class Printer
     'Your input is invalid. Please try again.'
   end
 
+  def find_by_invalid
+    "Find By is not a valid input."
+  end
+
   def loaded_success
     'Your file has been loaded successfully!'
   end
