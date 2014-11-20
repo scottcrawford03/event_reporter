@@ -25,6 +25,10 @@ class Printer
     'Your file has been loaded successfully!'
   end
 
+  def csv_saved
+    'Your CSV has been saved!'
+  end
+
   def entry_prompt
     'Enter Your Command > '
   end

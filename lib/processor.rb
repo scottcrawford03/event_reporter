@@ -131,6 +131,7 @@ class Processor
 
   def write_to_csv(csv_file)
     CSVParser.save_csv(csv_file, attendee_traits)
+    output. puts printer.csv_saved
   end
 
   def find(criteria, attribute)
