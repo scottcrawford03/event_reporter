@@ -21,7 +21,7 @@ class Processor
     @new_queue         = []
     @output            = output
     @input             = input
-    @command           = nil
+    @command           = command
     @instruction       = instruction
     @criteria          = criteria
     @attribute         = attribute
@@ -70,7 +70,7 @@ class Processor
     when ['count'] then puts printer.help_queue_count
     when ['clear'] then puts printer.help_queue_clear
     when ['print'] then puts printer.help_queue_print
-    when ['save'] then puts printer.help_queue_save
+    when ['save']  then puts printer.help_queue_save
     end
   end
 
@@ -86,10 +86,9 @@ class Processor
 
   def queue_print(attribute)
     system "clear"
-    if attribute.empty?
-      empty_table
-    else
-      sorted_queue_print(attribute)
+    case
+    when attribute.empty? then empty_table
+    else sorted_queue_print(attribute)
     end
   end
 
@@ -111,14 +110,25 @@ class Processor
   end
 
   def loader(csv_file)
-    if !csv_file.nil? && File.exist?("csv/#{csv_file}")
-      @list_of_attendees = CSVParser.load_csv(csv_file)
-      output.puts printer.loaded_success
-    else
-      @list_of_attendees = CSVParser.load_csv('event_attendees.csv')
-      output.puts printer.event_attendees_loaded
+    case
+    when csv_exists(csv_file) then load_user_file(csv_file)
+    else load_default_file
     end
     @list_maker  = ListMaker.new(list_of_attendees)
+  end
+
+  def load_default_file
+    @list_of_attendees = CSVParser.load_csv('event_attendees.csv')
+    output.puts printer.event_attendees_loaded
+  end
+
+  def load_user_file(csv_file)
+    @list_of_attendees = CSVParser.load_csv(csv_file)
+    output.puts printer.loaded_success
+  end
+
+  def csv_exists(csv_file)
+    !csv_file.nil? && File.exist?("csv/#{csv_file}")
   end
 
   def write_to_csv(csv_file)
@@ -126,18 +136,20 @@ class Processor
   end
 
   def find(criteria, attribute)
-    if list_of_attendees.empty?
-      output.puts printer.load_file_first
-    elsif criteria == 'home_phone' || criteria == 'zipcode'
+    case
+    when list_of_attendees.empty? then output.puts printer.load_file_first
+    when home_and_zip(criteria)
       result = list_maker.process_attribute(criteria, cleaner(criteria, attribute))
       output.puts printer.after_search
-    # elsif criteria == 'to' || criteria == 'by'
-    #   output.puts printer.find_by_invalid
-    elsif
+    else
       result = list_maker.process_attribute(criteria, attribute.join(' '))
       output.puts printer.after_search
     end
     @new_queue = result if result
+  end
+
+  def home_and_zip(criteria)
+    criteria == 'home_phone' || criteria == 'zipcode'
   end
 
   def cleaner(criteria, attribute)
