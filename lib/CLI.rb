@@ -17,13 +17,17 @@ class CLI
   end
 
   def search
-    output.puts printer.intro_art
-    output.puts printer.intro_message
+    intro_messages
     until quit?
       output.print printer.entry_prompt
       @command = input.gets.chomp.downcase
       processor.process_commands(command)
     end
+  end
+
+  def intro_messages
+    output.puts printer.intro_art
+    output.puts printer.intro_message
   end
 
   def quit?
