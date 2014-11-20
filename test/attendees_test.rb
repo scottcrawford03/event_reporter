@@ -19,7 +19,7 @@ class AttendeeTest < Minitest::Test
     assert_equal 'gregory', entry.first_name
     assert_equal 'parker', entry.last_name
     assert_equal 'gregory parker', entry.name
-    assert_equal '7183054000', entry.home_phone
+    assert_equal '718-305-4000', entry.home_phone
     assert_equal 'jhopenh1@jumpstartlab.com', entry.email
     assert_equal '7123 penn avenue, #3', entry.street
     assert_equal 'pittsburgh', entry.city
