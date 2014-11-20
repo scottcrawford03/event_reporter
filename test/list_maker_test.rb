@@ -3,6 +3,7 @@ require_relative '../lib/list_maker'
 require 'pry'
 
 class ListMakerTest < Minitest::Test
+
   def test_it_lookup_by_last_name
     entries = [
       { regdate: '1/31/09 23:00', first_name: 'Gregory', last_name: 'Parker', email_address: 'jhopenh1@jumpstartlab.com', homephone: '718-305-4000', street: '7123 Penn Avenue, #3', city: 'Pittsburgh', state: 'PA', zipcode: '15208' },
@@ -29,7 +30,7 @@ class ListMakerTest < Minitest::Test
     ]
 
     list_maker = ListMaker.new(entries)
-    result = list_maker.process_attribute('home_phone','7183054000')
+    result = list_maker.process_attribute('home_phone','718-305-4000')
 
     assert_equal 2, result.count
 
@@ -88,7 +89,7 @@ class ListMakerTest < Minitest::Test
 
     patrick = result[0]
 
-    assert_equal '7183054000', patrick.home_phone
+    assert_equal '718-305-4000', patrick.home_phone
     assert_equal 'parker', patrick.last_name
   end
 
@@ -106,7 +107,7 @@ class ListMakerTest < Minitest::Test
 
     pat = result[0]
 
-    assert_equal '7183054000', pat.home_phone
+    assert_equal '718-305-4000', pat.home_phone
   end
 
   def test_it_can_lookup_by_state
@@ -123,7 +124,7 @@ class ListMakerTest < Minitest::Test
 
     greg, pat = result
 
-    assert_equal '7183054000', pat.home_phone
+    assert_equal '718-305-4000', pat.home_phone
     assert_equal '15208', greg.zipcode
   end
 
@@ -141,7 +142,24 @@ class ListMakerTest < Minitest::Test
 
     scott = result[0]
 
-    assert_equal '2022701000', scott.home_phone
+    assert_equal '202-270-1000', scott.home_phone
   end
 
+  def test_it_adds_zeroes_to_zipcodes
+    entries = [
+      { regdate: '1/31/09 23:00', first_name: 'Gregory', last_name: 'Parker', email_address: 'jhopenh1@jumpstartlab.com', homephone: '718-305-4000', street: '7123 Penn Avenue, #3', city: 'Pittsburgh', state: 'PA', zipcode: '15208' },
+      { regdate: '2/1/09 17:05', first_name: 'Patrick', last_name: 'Parker', email_address: 'qkika_farrell@jumpstartlab.com', homephone: '718-305-4000', street: '4509 Frankford Avenue', city: 'Philadelphia', state: 'MD', zipcode: '9214' },
+      { regdate: '2/1/09 20:53', first_name: 'Scott', last_name: 'Parker', email_address: 'qhuer321@jumpstartlab.com', homephone: '202-270-1000', street: '19308 Alderbarn Ct', city: 'Brookeville', state: 'MD', zipcode: '833'}
+    ]
+
+    list_maker = ListMaker.new(entries)
+    result = list_maker.process_attribute('state', 'md')
+
+    assert_equal 2, result.count
+
+    greg, pat = result
+
+    assert_equal "09214", greg.zipcode
+    assert_equal "00833", pat.zipcode
+  end
 end
