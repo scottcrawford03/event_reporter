@@ -52,16 +52,13 @@ class Processor
   end
 
   def help_commands(criteria = nil, attribute = nil)
-    if criteria.nil?
-      output.puts printer.help_commands
-    else
-      case criteria
-      when 'quit' then puts printer.help_quit
-      when 'load' then puts printer.help_load
-      when 'find' then puts printer.help_find
-      when 'queue' then help_queue_commands(attribute)
-      when 'search' then puts printer.search_options
-      end
+    case criteria
+    when nil       then output.puts printer.help_commands
+    when 'quit'    then puts printer.help_quit
+    when 'load'    then puts printer.help_load
+    when 'find'    then puts printer.help_find
+    when 'queue'   then help_queue_commands(attribute)
+    when 'search'  then puts printer.search_options
     end
   end
 
