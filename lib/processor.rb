@@ -42,6 +42,7 @@ class Processor
     when 'queue'    then queue_commands(criteria, attribute)
     when 'help'     then help_commands(criteria, attribute)
     when 'quit'     then output.puts printer.quit_message
+    when 'q'        then output.puts printer.quit_message
     else output.puts printer.invalid_input
     end
   end
