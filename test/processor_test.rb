@@ -4,25 +4,23 @@ require_relative '../lib/processor'
 class ProcessorTest < Minitest::Test
 
   def test_it_splits_input_into_three_categories
-    skip
     command = "Find first_name Gregory"
-    processor = Processor.new("input", "output")
+    processor = Processor.new("input", StringIO.new)
     processor.process_commands(command)
 
-    assert_equal ['Find'], processor.instruction
-    assert_equal ['first_name'], processor.criteria
+    assert_equal 'Find', processor.instruction
+    assert_equal 'first_name', processor.criteria
     assert_equal ['Gregory'], processor.attribute
   end
 
   def test_it_saves_it_to_three_different_values
-    skip
     command = "Find first_name Gregory"
-    processor = Processor.new("input", "output")
-    processor.process(command)
+    processor = Processor.new("input", StringIO.new)
+    processor.process_commands(command)
 
     assert_equal 'Find', processor.instruction
     assert_equal 'first_name', processor.criteria
-    assert_equal 'Gregory', processor.attribute
+    assert_equal ['Gregory'], processor.attribute
   end
 
   def test_it_accounts_for_to_or_by
